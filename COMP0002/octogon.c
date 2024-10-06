@@ -1,6 +1,8 @@
 #include "graphics.h"
 #include "math.h"
 
+//Q1.3//
+
   int main(void)
   {
     setWindowSize(200,200);
