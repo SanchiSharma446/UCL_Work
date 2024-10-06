@@ -2,8 +2,6 @@
 #include "graphics.h"
 #include "math.h"
 
-// Written by Sanchi 6th Oct 2024 // This program displays my name.
-
 int main(void)
 {
   double DEG;
