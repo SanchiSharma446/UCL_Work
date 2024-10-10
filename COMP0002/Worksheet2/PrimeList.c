@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 void Primes(){
 
     int primes[] = {2};
