@@ -13,7 +13,7 @@ void squares(){
 
 int main(){
 
-    even();
-
-  return 0;
+    squares();
+    
+    return 0;
 }
