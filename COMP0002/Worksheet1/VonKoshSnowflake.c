@@ -18,8 +18,8 @@ void fractal(float sx, float sy, float ex, float ey, int size)
   float y2 = (sy + 2.0 * ey) / 3.0;
 
   // Calculating triangle vertex
-  float x3 = (x1 + x2) / 2.0 + (sqrt(3.0) / 2.0) * (y2 - y1);
-  float y3 = (y1 + y2) / 2.0 - (sqrt(3.0) / 2.0) * (x2 - x1);
+  float x3 = (x1 + x2) / 2.0 - (sqrt(3.0) / 2.0) * (y2 - y1);
+  float y3 = (y1 + y2) / 2.0 + (sqrt(3.0) / 2.0) * (x2 - x1);
 
   // Calling function for each of the four sections
   fractal(sx, sy, x1, y1, size - 1);  // A to B
@@ -46,9 +46,9 @@ int main(void)
   float y3 = y1;
 
   // Call recursion 3 times for each side
-  fractal(x1, y1, x2, y2, 10);
-  fractal(x3, y3, x1, y1, 10);
-  fractal(x2, y2, x3, y3, 10);
+  fractal(x1, y1, x2, y2, 3);
+  fractal(x3, y3, x1, y1, 3);
+  fractal(x2, y2, x3, y3, 3);
   
   return 0;
 }
