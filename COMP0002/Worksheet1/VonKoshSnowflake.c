@@ -42,8 +42,8 @@ int main(void)
   float x2 = x1 + len * cos(PI/3);
   float y2 = y1 + len * sin(PI/3);
 
-  float x3 = x1 + len * cos(2*PI/3);
-  float y3 = y1 + len * sin(2*PI/3);
+  float x3 = x1 + len;
+  float y3 = y1;
 
   // Call recursion 3 times for each side
   fractal(x1, y1, x2, y2, 10);
