@@ -7,7 +7,7 @@ void fractal(float sx, float sy, float ex, float ey, int size)
 {
   if (size == 0) {
     drawLine(sx, sy, ex, ey);
-    return;
+    return 0;
   }
 
   // Calculating x1 and x2
