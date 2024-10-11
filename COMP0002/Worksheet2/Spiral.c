@@ -3,10 +3,7 @@
 
 int main(){
 
-    float x = 0;
-    float y = 0;
-    float r = 0;
-    float t = 0;
+    float x, y, r, t = 0;
     
     double PI = 3.1415926535;
 
