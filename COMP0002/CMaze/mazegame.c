@@ -11,7 +11,6 @@ int GRID[WIDTH][HEIGHT] = {0};
 int HOME[2] = {1, 1};
 bool visited[WIDTH][HEIGHT] = {false};
 int storedMarks = 0;
-int MEMORY[WIDTH][HEIGHT] = {0};
 int VALIDTILES[WIDTH][HEIGHT] = {0};
 int pathCounter = 0;
 
@@ -25,15 +24,9 @@ struct Robot{
 
 struct Robot robot = {1, 1, E};
 
-void setMemory(){
-    for(int i = 0; i < HEIGHT; i++){
-        for(int j = 0; j < WIDTH; j++){
-            MEMORY[j][i] = -1;
-        }
-    }
-}
 
 //grid setup functions below//
+
 
 void Square(int x, int y){
     fillRect(x, y, 40, 40);
@@ -302,7 +295,6 @@ int main(){
     srand(time(0)); //using current time as seed for random number generator
 
     drawBackground();   
-    setMemory();
 
     DFS(robot.x, robot.y);
 
