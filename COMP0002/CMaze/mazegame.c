@@ -1,4 +1,3 @@
-#include <stdio.h> 
 #include <stdlib.h> 
 #include "graphics.h" 
 #include <time.h> 
@@ -13,7 +12,7 @@ int HOME[2] = {1, 1};
 bool visited[WIDTH][HEIGHT] = {false};
 int storedMarks = 0;
 int MEMORY[WIDTH][HEIGHT] = {0};
-int PATH[3][14*14] = {0};
+int VALIDTILES[WIDTH][HEIGHT] = {0};
 int pathCounter = 0;
 
 enum direction {N, E, S, W};
@@ -86,7 +85,7 @@ void setWalls(){
 void setObstacles(){
     int x, y;
 
-    for(int i = 0; i < 8; i++){
+    for(int i = 0; i < 12; i++){
         do {
         x = rand() % (WIDTH - 2) + 1;
         y = rand() % (HEIGHT - 2) + 1;
@@ -97,30 +96,35 @@ void setObstacles(){
 }
 
 int markAccessibleCells(int x, int y, bool visited[WIDTH][HEIGHT]) {
+    // BFS to count number of accessible cells
     int queue[WIDTH * HEIGHT][2];
     int front = 0, rear = 0; 
     int tiles = 0;
 
     queue[rear][0] = x;
-    queue[rear++][1] = y;
+    queue[rear][1] = y;
+    rear++;
     visited[x][y] = true;
 
-    int dx[] = {0, 1, 0, -1};
-    int dy[] = {-1, 0, 1, 1};
+    int dx[] = {0, 1, 0, -1}; // N, E, S, W
+    int dy[] = {-1, 0, 1, 0};
 
     while (front < rear) {
-        int cx = queue[front][0];
-        int cy = queue[front++][1];
+        int current_x = queue[front][0];
+        int current_y = queue[front][1];
+        front++;
         tiles++;
 
-        for (int i = 0; i < 4; i++) {
-            int nx = cx + dx[i];
-            int ny = cy + dy[i];
+        for (int i = 0; i < 4; i++) { // Checking neighbouring cells accessibility
+            int new_x = current_x + dx[i];
+            int new_y = current_y + dy[i];
 
-            if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && !visited[nx][ny] && GRID[nx][ny] == 0) {
-                visited[nx][ny] = true;
-                queue[rear][0] = nx;
-                queue[rear++][1] = ny;
+            if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT && !visited[new_x][new_y] && GRID[new_x][new_y] == 0) {
+                visited[new_x][new_y] = true;
+                queue[rear][0] = new_x;
+                queue[rear][1] = new_y;
+                VALIDTILES[new_x][new_y] = 1;
+                rear++;
             }
         }
     }
@@ -140,12 +144,18 @@ void findValidArrowPosition() {
             }
         }
 
-        // Randomly choose an initial position within the grid bounds
         robot.x = rand() % (WIDTH - 2) + 1;
         robot.y = rand() % (HEIGHT - 2) + 1;
 
-        if (GRID[robot.x][robot.y] != 0) {
-            continue; // Skip positions that aren't empty, skips to next iteration of while loop
+        if (GRID[robot.x][robot.y] != 0 ) {
+            continue; // Skip positions that aren't empty or valid to next iteration of while loop
+        }
+
+        // Reset VALIDTILES array
+        for (int i = 0; i < WIDTH; i++) {
+            for (int j = 0; j < HEIGHT; j++) {
+                VALIDTILES[i][j] = 0;
+            }
         }
 
         // Run BFS to count reachable cells
@@ -161,7 +171,6 @@ void findValidArrowPosition() {
 }
 
 void setMarkers() {
-    bool visited[WIDTH][HEIGHT] = {false};
 
     int x, y;
 
@@ -169,7 +178,8 @@ void setMarkers() {
         do {
         x = rand() % (WIDTH - 2) + 1;
         y = rand() % (HEIGHT - 2) + 1;
-        } while (GRID[x][y] != 0 || (x == HOME[0] && y == HOME[1])); // Place only in empty cells
+        } while (GRID[x][y] != 0 || (x == HOME[0] && y == HOME[1]) || VALIDTILES[x][y] == 0); 
+        // Place only in empty cells
 
         GRID[x][y] = 2; // Marker
     }
@@ -212,9 +222,6 @@ void setGrid(){
 }
 
 void setHome(){
-    int x = 0;
-    int y = 0;
-
     setColour(orange);
     fillRect(HOME[0] * 40 + 1, HOME[1] * 40 + 1, 39, 39);
 }
@@ -257,9 +264,6 @@ void move(int x1, int y1){
 void DFS(int x, int y) {
 
     visited[x][y] = true;
-    
-    PATH[0][pathCounter] = x;
-    PATH[1][pathCounter] = y;
 
     tryCollectMarker();
 
@@ -295,7 +299,6 @@ void DFS(int x, int y) {
 
 
 int main(){
-    bool start = true;
 
     srand(time(0)); //using current time as seed for random number generator
 
@@ -306,6 +309,7 @@ int main(){
 
     setColour(black);
     drawString("Markers (hopefully) Collected!", 195, 225);
+    setColour(orange);
     setHome();
 
     return 0;
