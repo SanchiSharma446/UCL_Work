@@ -33,6 +33,8 @@ void setMemory(){
     }
 }
 
+//grid setup functions below//
+
 void Square(int x, int y){
     fillRect(x, y, 40, 40);
 }
@@ -137,7 +139,6 @@ void findValidArrowPosition() {
     int tiles;
 
     while (!posFound) {
-        // Reset visited array
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 visited[i][j] = false;
@@ -147,11 +148,10 @@ void findValidArrowPosition() {
         robot.x = rand() % (WIDTH - 2) + 1;
         robot.y = rand() % (HEIGHT - 2) + 1;
 
-        if (GRID[robot.x][robot.y] != 0 ) {
+        if (GRID[robot.x][robot.y] != 0) {
             continue; // Skip positions that aren't empty or valid to next iteration of while loop
         }
 
-        // Reset VALIDTILES array
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 VALIDTILES[i][j] = 0;
@@ -267,10 +267,9 @@ void DFS(int x, int y) {
 
     tryCollectMarker();
 
-    int dx[] = {0, 1, 0, -1};
+    int dx[] = {0, 1, 0, -1}; // N, E, S, W
     int dy[] = {-1, 0, 1, 0};
 
-    // Explore all four directions
     for (int i = 0; i < 4; i++) {
         int x1 = x + dx[i];
         int y1 = y + dy[i];
