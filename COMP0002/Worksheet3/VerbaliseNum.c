@@ -3,7 +3,6 @@
 void NumToText(int num)
 {
     int i = 0;
-    char string[] = "";
     char nums[][6] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     char tens[][8] = {"ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninty"};
 
