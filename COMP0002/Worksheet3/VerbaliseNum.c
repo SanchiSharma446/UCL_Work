@@ -39,7 +39,7 @@ void NumToText(int num)
     }
 
 
-    if(num % 10 != 0 && num % 100 > 19){
+    if(num % 10 != 0){
         printf("%s ", nums[num%10]);
     }
         
