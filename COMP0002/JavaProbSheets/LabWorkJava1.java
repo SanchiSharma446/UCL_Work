@@ -392,13 +392,40 @@ public class LabWork {
 
 
     //Q18
-    private void verbaliseNum(long num)
+    private void verbaliseNum(int num)
     {
-        
+        String[] nums = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        String[] tens = {"ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninty"};
+
+        if(num % 100 == 0){
+            System.out.print(nums[num/100] + " hundered ");
+        }
+        else if(num > 101){
+            System.out.print(nums[num/100] + " hundered and ");
+        }
+
+        if(num % 100 == 11){
+            System.out.print("eleven ");
+        }
+        else if(num % 100 == 12){
+            System.out.print("twelve ");
+        }
+        else if(num % 10 == 0){
+            System.out.print(tens[(num%100)/10 - 1] + " ");
+        }
+        else if(num % 100 > 12 && num % 100 < 20){
+            System.out.print(nums[num%10] + "teen ");
+        }
+        else if(num % 100 > 20){
+            System.out.print(tens[(num%100)/10 - 1] + " ");
+        }
+
+        if(num % 10 != 0){
+            System.out.print(nums[num%10]);
+        }
     }
 
     public static void main(String[] args){
-        boolean trial = new LabWork().testIfPrime(367);
-        System.out.println(trial);
+        new LabWork().verbaliseNum(2);
     }
 }
